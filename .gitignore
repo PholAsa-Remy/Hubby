@@ -1,0 +1,35 @@
+# Ignore target directories and compiled classes for Spring Boot
+/target/
+/build/
+
+# Ignore IntelliJ IDEA files
+.idea/
+
+# Ignore Eclipse files
+.classpath
+.project
+.settings/
+
+# Ignore maven build file
+mvnw
+mvnw.cmd
+
+# Ignore npm dependencies
+/node_modules/
+
+# Ignore React build output
+/build/
+
+# Ignore compiled JavaScript files
+*.js
+*.jsx
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Env files
+*.env
