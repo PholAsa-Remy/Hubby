@@ -1,0 +1,24 @@
+# Ignore target directories and compiled classes
+/target/
+/build/
+
+# Ignore IntelliJ IDEA files
+.idea/
+
+# Ignore Eclipse files
+.classpath
+.project
+.settings/
+
+# Ignore npm dependencies
+/node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Env files
+*.env
