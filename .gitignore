@@ -1,4 +1,4 @@
-# Ignore target directories and compiled classes for Spring Boot
+# Ignore target directories and compiled classes
 /target/
 /build/
 
@@ -16,13 +16,6 @@ mvnw.cmd
 
 # Ignore npm dependencies
 /node_modules/
-
-# Ignore React build output
-/build/
-
-# Ignore compiled JavaScript files
-*.js
-*.jsx
 
 # Ignore log files
 *.log
