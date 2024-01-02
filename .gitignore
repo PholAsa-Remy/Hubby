@@ -10,10 +10,6 @@
 .project
 .settings/
 
-# Ignore maven build file
-mvnw
-mvnw.cmd
-
 # Ignore npm dependencies
 /node_modules/
 
