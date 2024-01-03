@@ -1,4 +1,4 @@
-package com.meetandcraft.Backend;
+package com.meetandcraft.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
