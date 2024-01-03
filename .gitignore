@@ -5,11 +5,6 @@
 # Ignore IntelliJ IDEA files
 .idea/
 
-# Ignore Eclipse files
-.classpath
-.project
-.settings/
-
 # Ignore npm dependencies
 /node_modules/
 
