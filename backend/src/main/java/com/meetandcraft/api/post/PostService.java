@@ -9,4 +9,7 @@ import java.util.UUID;
 public interface PostService {
     List<PostDto> getAllPostFromProject (UUID projectId);
     PostDto createPost(UUID projectId, PostDto postDto);
+    PostDto getPostById (UUID projectId, UUID postId);
+    PostDto updatePostById (UUID projectId, UUID postId, PostDto postDto);
+    void deletePostById(UUID projectId, UUID postId);
 }

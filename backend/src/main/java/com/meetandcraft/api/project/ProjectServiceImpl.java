@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 class ProjectServiceImpl implements ProjectService{
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
     @Autowired
     public ProjectServiceImpl(ProjectRepository projectRepository) {
@@ -42,8 +42,13 @@ class ProjectServiceImpl implements ProjectService{
     @Override
     public ProjectDto getProjectById(UUID projectId) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ProjectNotFoundException("The project " + projectId + "couldn't be found"));
+                .orElseThrow(() -> new ProjectNotFoundException("The project couldn't be found"));
         return ProjectMapper.mapToDto(project);
+    }
+
+    @Override
+    public boolean projectExist(UUID projectId) {
+        return projectRepository.existsById(projectId);
     }
 
     @Override
@@ -58,7 +63,7 @@ class ProjectServiceImpl implements ProjectService{
     @Override
     public ProjectDto updateProjectById(UUID projectId, ProjectDto projectDto) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ProjectNotFoundException("The project " + projectId + "couldn't be found"));
+                .orElseThrow(() -> new ProjectNotFoundException("The project couldn't be found"));
         project.setTitle(projectDto.getTitle());
         project.setDescription(projectDto.getDescription());
         Project updatedProject = projectRepository.save(project);
@@ -68,7 +73,7 @@ class ProjectServiceImpl implements ProjectService{
     @Override
     public void deleteProjectById(UUID projectId) {
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ProjectNotFoundException("The project " + projectId + " couldn't be deleted"));
+                .orElseThrow(() -> new ProjectNotFoundException("The project couldn't be found"));
         projectRepository.delete(project);
     }
 
