@@ -19,8 +19,6 @@ target/
 *.iml
 *.ipr
 
-application.properties
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -33,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Dev ###
+application-dev.properties
