@@ -1,4 +1,4 @@
-package com.meetandcraft.api.security.DTO;
+package com.meetandcraft.api.user;
 
 import lombok.Data;
 

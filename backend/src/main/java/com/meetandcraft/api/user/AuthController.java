@@ -1,8 +1,5 @@
-package com.meetandcraft.api.security;
+package com.meetandcraft.api.user;
 
-import com.meetandcraft.api.security.DTO.AuthResponseDto;
-import com.meetandcraft.api.security.DTO.LoginDto;
-import com.meetandcraft.api.security.DTO.RegisterDto;
 import com.meetandcraft.api.security.JWT.JWTGenerator;
 import com.meetandcraft.api.user.Role;
 import com.meetandcraft.api.user.RoleRepository;
@@ -48,7 +45,7 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<AuthResponseDto> login (@RequestBody LoginDto loginDto) {
+    public ResponseEntity<Role.AuthResponseDto> login (@RequestBody Role.LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     loginDto.getUsername(),
@@ -57,11 +54,11 @@ public class AuthController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+        return new ResponseEntity<>(new Role.AuthResponseDto(token), HttpStatus.OK);
     }
 
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
+    public ResponseEntity<String> register(@RequestBody Role.RegisterDto registerDto){
         if (userRepository.existsByUsername(registerDto.getUsername())){
             return new ResponseEntity<>("Username is already taken", HttpStatus.BAD_REQUEST);
         }

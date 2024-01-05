@@ -1,9 +1,9 @@
-package com.meetandcraft.api.security.DTO;
+package com.meetandcraft.api.user;
 
 import lombok.Data;
 
 @Data
-public class RegisterDto {
+public class LoginDto {
     private String username;
     private String password;
 }
