@@ -47,7 +47,7 @@ class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public boolean projectExist(UUID projectId) {
+    public Boolean projectExist(UUID projectId) {
         return projectRepository.existsById(projectId);
     }
 
