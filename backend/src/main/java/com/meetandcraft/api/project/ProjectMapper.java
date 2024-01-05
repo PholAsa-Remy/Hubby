@@ -1,6 +1,6 @@
 package com.meetandcraft.api.project;
 
-class ProjectMapper {
+public class ProjectMapper {
     public static Project mapToEntity (ProjectDto projectDto) {
         Project project = new Project();
         project.setId(projectDto.getId());

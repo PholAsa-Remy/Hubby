@@ -1,9 +1,7 @@
 package com.meetandcraft.api.post;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.meetandcraft.api.project.Project;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +19,8 @@ public class Post {
 
     private String title;
     private String content;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
 }
