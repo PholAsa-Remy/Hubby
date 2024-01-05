@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface ProjectService {
     ProjectResponse getAllProject (int pageNo, int pageSize);
     ProjectDto getProjectById(UUID projectId);
-    boolean projectExist (UUID projectId);
+    Boolean projectExist (UUID projectId);
     ProjectDto createProject (ProjectDto projectDto);
     ProjectDto updateProjectById (UUID projectId, ProjectDto projectDto);
     void deleteProjectById (UUID projectId);
