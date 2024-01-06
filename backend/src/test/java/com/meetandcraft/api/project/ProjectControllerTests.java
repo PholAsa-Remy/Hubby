@@ -50,7 +50,7 @@ public class ProjectControllerTests {
 
     @Test
     public void ProjectController_CreateProject_ReturnCreated () throws Exception {
-        given(projectService.createProject(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
+        when (projectService.createProject(Mockito.any(ProjectDto.class))).thenReturn(projectDto);
 
         ResultActions response = mockMvc.perform(post("/api/project")
                 .contentType(MediaType.APPLICATION_JSON)
