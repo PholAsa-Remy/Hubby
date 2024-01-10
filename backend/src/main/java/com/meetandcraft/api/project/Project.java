@@ -1,5 +1,6 @@
 package com.meetandcraft.api.project;
 
+import com.meetandcraft.api.member.Member;
 import com.meetandcraft.api.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> post = new ArrayList<Post>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Member> members;
 }
