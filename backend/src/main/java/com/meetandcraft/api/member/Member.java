@@ -22,7 +22,14 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String role;
+    public enum projectRole {
+        REQUESTING, //Waiting to be approved by a member
+        MEMBER,
+        ADMIN,
+        OWNER
+    }
+
+    private projectRole projectRole;
 
     @ManyToOne(fetch= FetchType.EAGER)
     private UserEntity user;

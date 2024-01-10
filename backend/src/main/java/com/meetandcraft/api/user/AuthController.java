@@ -45,7 +45,7 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<Role.AuthResponseDto> login (@RequestBody Role.LoginDto loginDto) {
+    public ResponseEntity<AuthResponseDto> login (@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     loginDto.getUsername(),
@@ -54,11 +54,11 @@ public class AuthController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new Role.AuthResponseDto(token), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
     }
 
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody Role.RegisterDto registerDto){
+    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         if (userRepository.existsByUsername(registerDto.getUsername())){
             return new ResponseEntity<>("Username is already taken", HttpStatus.BAD_REQUEST);
         }
