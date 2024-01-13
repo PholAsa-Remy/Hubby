@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+class MemberServiceImpl implements MemberService{
 
     private MemberRepository memberRepository;
 
