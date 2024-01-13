@@ -24,6 +24,6 @@ public class Post {
     private String content;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "projects_id")
     private Project project;
 }

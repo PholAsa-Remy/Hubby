@@ -76,8 +76,4 @@ class ProjectServiceImpl implements ProjectService{
                 .orElseThrow(() -> new ProjectNotFoundException("The project couldn't be found"));
         projectRepository.delete(project);
     }
-
-
-
-
 }
