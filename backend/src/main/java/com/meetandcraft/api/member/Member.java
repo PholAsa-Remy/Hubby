@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
@@ -18,23 +19,34 @@ import java.util.UUID;
 @Table(name = "members")
 /* Link a user to a specific project */
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    public static final String REQUESTING = "requesting";
+    public static final String MEMBER = "member";
+    public static final String ADMIN = "admin";
+    public static final String OWNER = "owner";
 
-    public enum projectRole {
-        REQUESTING, //Waiting to be approved by a member
-        MEMBER,
-        ADMIN,
-        OWNER
-    }
+    @EmbeddedId
+    private MemberKey id;
+    private String role;
 
-    private projectRole projectRole;
-
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "users_id", insertable = false, updatable = false)
     private UserEntity user;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "projects_id", insertable = false, updatable = false)
     private Project project;
+}
 
+@Embeddable
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class MemberKey implements Serializable {
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "projects_id")
+    private Project project;
 }

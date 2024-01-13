@@ -13,9 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDto {
-    private UUID id;
-
     private String role;
-    private UserEntity user;
-    private Project project;
+    private UUID userId;
+    private UUID projectId;
 }
