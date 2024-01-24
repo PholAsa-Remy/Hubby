@@ -15,33 +15,27 @@ import java.util.UUID;
 @Service
 public class PostServiceImpl implements PostService{
     private final PostRepository postRepository;
-    private final ProjectService projectService;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, ProjectService projectService) {
+    public PostServiceImpl(PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.projectService = projectService;
     }
 
     @Override
-    public List<PostDto> getAllPostFromProject(UUID projectId) {
-        List<Post> posts = postRepository.findByProjectId(projectId);
+    public List<PostDto> getAllPostFromProject(ProjectDto projectDto) {
+        List<Post> posts = postRepository.findByProjectId(projectDto.getId());
         return posts.stream().map(PostMapper::mapToDto).toList();
     }
 
     @Override
-    public PostDto getPostById(UUID projectId, UUID postId) {
-        if (!projectService.projectExist(projectId))
-            throw new ProjectNotFoundException("The project doesn't exist");
-
+    public PostDto getPostById(ProjectDto projectDto, UUID postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException("The post couldn't be found"));
         return PostMapper.mapToDto(post);
     }
 
     @Override
-    public PostDto createPost(UUID projectId, PostDto postDto) {
-        ProjectDto projectDto = projectService.getProjectById(projectId);
+    public PostDto createPost(ProjectDto projectDto, PostDto postDto) {
         Project project = ProjectMapper.mapToEntity(projectDto);
 
         Post post = new Post();
@@ -54,10 +48,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDto updatePostById(UUID projectId, UUID postId, PostDto postDto) {
-        if (!projectService.projectExist(projectId))
-            throw new ProjectNotFoundException("The project doesn't exist");
-
+    public PostDto updatePostById(UUID postId, PostDto postDto) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException("The post couldn't be found"));
 
@@ -69,10 +60,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public void deletePostById(UUID projectId, UUID postId) {
-        if (!projectService.projectExist(projectId))
-            throw new ProjectNotFoundException("The project doesn't exist");
-
+    public void deletePostById(UUID postId) {
         postRepository.deleteById(postId);
     }
 }

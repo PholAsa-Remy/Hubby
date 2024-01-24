@@ -1,5 +1,6 @@
 package com.meetandcraft.api.post;
 
+import com.meetandcraft.api.project.ProjectDto;
 import com.meetandcraft.api.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +16,20 @@ import java.util.UUID;
 @RequestMapping("/api/")
 public class PostController {
     private PostService postService;
+    private ProjectService projectService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, ProjectService projectService) {
         this.postService = postService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/project/{projectId}/post")
     public ResponseEntity<List<PostDto>> getAllPostFromProject (
             @PathVariable(value = "projectId")UUID projectId
     ){
-        return new ResponseEntity<>(postService.getAllPostFromProject(projectId), HttpStatus.OK);
+        ProjectDto projectDto = projectService.getProjectById(projectId);
+        return new ResponseEntity<>(postService.getAllPostFromProject(projectDto), HttpStatus.OK);
     }
 
     @GetMapping("/project/{projectId}/post/{postId}")
@@ -33,7 +37,8 @@ public class PostController {
             @PathVariable(value = "projectId") UUID projectId,
             @PathVariable(value = "postId") UUID postId
     ){
-        return new ResponseEntity<>(postService.getPostById(projectId,postId),HttpStatus.OK);
+        ProjectDto projectDto = projectService.getProjectById(projectId);
+        return new ResponseEntity<>(postService.getPostById(projectDto,postId),HttpStatus.OK);
     }
 
     @PostMapping("/project/{projectId}/post")
@@ -41,7 +46,8 @@ public class PostController {
             @PathVariable(value = "projectId") UUID projectId,
             @RequestBody PostDto postDto
     ){
-        return new ResponseEntity<>(postService.createPost(projectId,postDto),HttpStatus.CREATED);
+        ProjectDto projectDto = projectService.getProjectById(projectId);
+        return new ResponseEntity<>(postService.createPost(projectDto,postDto),HttpStatus.CREATED);
     }
 
     @PutMapping("/project/{projectId}/post/{postId}")
@@ -50,7 +56,8 @@ public class PostController {
             @PathVariable(value = "postId") UUID postId,
             @RequestBody PostDto postDto
     ){
-        return new ResponseEntity<>(postService.updatePostById(projectId,postId,postDto),HttpStatus.CREATED);
+        ProjectDto projectDto = projectService.getProjectById(projectId);
+        return new ResponseEntity<>(postService.updatePostById(postId,postDto),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/project/{projectId}/post/{postId}")
@@ -58,7 +65,7 @@ public class PostController {
             @PathVariable(value = "projectId") UUID projectId,
             @PathVariable(value = "postId") UUID postId
     ){
-        postService.deletePostById(projectId,postId);
+        postService.deletePostById(postId);
         return new ResponseEntity<>("The post have been deleted successfully", HttpStatus.OK);
     }
 }

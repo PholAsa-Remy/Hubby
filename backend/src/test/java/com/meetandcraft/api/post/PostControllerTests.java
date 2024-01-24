@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -39,6 +40,9 @@ public class PostControllerTests {
     @MockBean
     private PostService postService;
 
+    @MockBean
+    private ProjectService projectService;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -49,16 +53,17 @@ public class PostControllerTests {
 
     @BeforeEach
     public void init () {
-        this.project = Project.builder().title("Project").description("Description").build();
-        this.projectDto = ProjectDto.builder().title("Project").description("Description").build();
-        this.post = Post.builder().title("Post").content("Content").build();
-        this.postDto = PostDto.builder().title("Post").content("Content").build();
+        this.project = Project.builder().id(new UUID(10,10)).title("Project").description("Description").build();
+        this.projectDto = ProjectDto.builder().id(new UUID(10,10)).title("Project").description("Description").build();
+        this.post = Post.builder().id(new UUID(10,10)).title("Post").content("Content").build();
+        this.postDto = PostDto.builder().id(new UUID(10,10)).title("Post").content("Content").build();
     }
 
     @Test
     public void PostController_GetAllPostsFromProject_ReturnPostDto () throws Exception {
         UUID id = new UUID(10, 10);
-        when(postService.getAllPostFromProject(Mockito.any(UUID.class))).thenReturn(Arrays.asList(postDto));
+        when(postService.getAllPostFromProject(Mockito.any(ProjectDto.class))).thenReturn(Arrays.asList(postDto));
+        when(projectService.getProjectById(Mockito.any(UUID.class))).thenReturn(projectDto);
 
         ResultActions response = mockMvc.perform(get("/api/project/" + id + "/post")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +77,8 @@ public class PostControllerTests {
     public void PostController_UpdatePost_ReturnPostDto () throws Exception {
         UUID projectId = new UUID(10,10);
         UUID postId = new UUID(10,10);
-        when(postService.updatePostById(Mockito.any(UUID.class),Mockito.any(UUID.class),Mockito.any(PostDto.class))).thenReturn(postDto);
+        when(postService.updatePostById(Mockito.any(UUID.class),Mockito.any(PostDto.class))).thenReturn(postDto);
+        when(projectService.getProjectById(Mockito.any(UUID.class))).thenReturn(projectDto);
 
         ResultActions response = mockMvc.perform(put("/api/project/" + projectId + "/post/" + postId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +92,8 @@ public class PostControllerTests {
     @Test
     public void PostController_CreatePostForProject_ReturnPostDtoCreated () throws Exception {
         UUID projectId = new UUID(10,10);
-        when(postService.createPost(Mockito.any(UUID.class),Mockito.any(PostDto.class))).thenReturn(postDto);
+        when(postService.createPost(Mockito.any(ProjectDto.class),Mockito.any(PostDto.class))).thenReturn(postDto);
+        when(projectService.getProjectById(Mockito.any(UUID.class))).thenReturn(projectDto);
 
         ResultActions response = mockMvc.perform(post("/api/project/" + projectId + "/post")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -101,7 +108,8 @@ public class PostControllerTests {
     public void PostController_GetPostFromProject_ReturnPostDto () throws Exception {
         UUID projectId = new UUID(10, 10);
         UUID postId = new UUID(10, 10);
-        when(postService.getPostById(Mockito.any(UUID.class),Mockito.any(UUID.class))).thenReturn(postDto);
+        when(postService.getPostById(Mockito.any(ProjectDto.class),Mockito.any(UUID.class))).thenReturn(postDto);
+        when(projectService.getProjectById(Mockito.any(UUID.class))).thenReturn(projectDto);
 
         ResultActions response = mockMvc.perform(get("/api/project/" + projectId + "/post/" + postId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -114,12 +122,11 @@ public class PostControllerTests {
 
     @Test
     public void PostController_DeletePostFromProject_ReturnOk () throws Exception {
-        UUID projectId = new UUID(10, 10);
         UUID postId = new UUID(10, 10);
+        when(projectService.getProjectById(Mockito.any(UUID.class))).thenReturn(projectDto);
+        doNothing().when(postService).deletePostById(postId);
 
-        doNothing().when(postService).deletePostById(projectId,postId);
-
-        ResultActions response = mockMvc.perform(delete("/api/project/" + projectId + "/post/" + postId)
+        ResultActions response = mockMvc.perform(delete("/api/project/" + projectDto.getId() + "/post/" + postId)
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(MockMvcResultMatchers.status().isOk());
