@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 public interface UserEntityService {
     AuthResponseDto login (LoginDto loginDto);
     UserEntityDto register (RegisterDto registerDto);
+    UserEntityDto getUserByUsername (String username);
 }

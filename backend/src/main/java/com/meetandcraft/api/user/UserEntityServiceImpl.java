@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +62,13 @@ public class UserEntityServiceImpl implements UserEntityService {
         user.setRoles(Collections.singletonList(roles));
         UserEntity savedUser = userEntityRepository.save(user);
         return UserEntityMapper.mapToDto(savedUser);
+    }
+
+    @Override
+    public UserEntityDto getUserByUsername(String username) {
+        UserEntity user = userEntityRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("This user couldn't be found"));
+        UserEntityDto userEntityDto = UserEntityMapper.mapToDto(user);
+        return userEntityDto;
     }
 }
