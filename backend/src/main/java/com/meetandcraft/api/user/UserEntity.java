@@ -1,5 +1,6 @@
 package com.meetandcraft.api.user;
 
+import com.meetandcraft.api.member.Member;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,4 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private List<Role> roles = new ArrayList<> ();
-
 }

@@ -1,5 +1,7 @@
 package com.meetandcraft.api.post;
 
+import com.meetandcraft.api.project.Project;
+import com.meetandcraft.api.project.ProjectDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -7,9 +9,9 @@ import java.util.UUID;
 
 @Service
 public interface PostService {
-    List<PostDto> getAllPostFromProject (UUID projectId);
-    PostDto createPost(UUID projectId, PostDto postDto);
-    PostDto getPostById (UUID projectId, UUID postId);
-    PostDto updatePostById (UUID projectId, UUID postId, PostDto postDto);
-    void deletePostById(UUID projectId, UUID postId);
+    List<PostDto> getAllPostFromProject (ProjectDto projectDto);
+    PostDto createPost(ProjectDto projectDto, PostDto postDto);
+    PostDto getPostById (ProjectDto projectDto, UUID postId);
+    PostDto updatePostById (UUID postId, PostDto postDto);
+    void deletePostById(UUID postId);
 }

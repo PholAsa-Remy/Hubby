@@ -20,8 +20,6 @@ import static org.mockito.Mockito.*;
 public class PostServiceTests {
     @Mock
     private PostRepository postRepository;
-    @Mock
-    private ProjectService projectService;
 
     @InjectMocks
     private PostServiceImpl postService;
@@ -34,64 +32,53 @@ public class PostServiceTests {
     @BeforeEach
     public void init () {
         this.project = Project.builder().title("Project").description("Description").build();
-        this.projectDto = ProjectDto.builder().title("Project").description("Description").build();
+        this.projectDto = ProjectDto.builder().id(new UUID(10,10)).title("Project").description("Description").build();
         this.post = Post.builder().title("Post").content("Content").build();
         this.postDto = PostDto.builder().title("Post").content("Content").build();
     }
 
     @Test
     public void PostService_CreatePost_ReturnPostDto (){
-        when(projectService.getProjectById(project.getId())).thenReturn(projectDto);
         when(postRepository.save(Mockito.any(Post.class))).thenReturn(post);
 
-        PostDto savedPost = postService.createPost(project.getId(),postDto);
+        PostDto savedPost = postService.createPost(projectDto,postDto);
         assertThat(savedPost).isNotNull();
     }
 
     @Test
     public void PostService_GetAllPostsFromProject_ReturnListPostDto () {
-        UUID id = new UUID(10,10);
         when(postRepository.findByProjectId(Mockito.any(UUID.class))).thenReturn(Arrays.asList(post));
 
-        List<PostDto> posts = postService.getAllPostFromProject(id);
+        List<PostDto> posts = postService.getAllPostFromProject(projectDto);
 
         assertThat(posts).isNotNull();
     }
 
     @Test
     public void PostService_GetPostsFromProjectById_ReturnListPostDto () {
-        UUID projectId = new UUID(10,10);
         UUID postId = new UUID(10,10);
 
         when(postRepository.findById(Mockito.any(UUID.class))).thenReturn(Optional.ofNullable(post));
-        when(projectService.projectExist(Mockito.any(UUID.class))).thenReturn(true);
-
-        PostDto post = postService.getPostById(projectId,postId);
+        PostDto post = postService.getPostById(projectDto,postId);
 
         assertThat(post).isNotNull();
     }
 
     @Test
     public void PostService_UpdatePostById_ReturnPostDto () {
-        UUID projectId = new UUID(10,10);
         UUID postId = new UUID(10,10);
 
         when(postRepository.findById(Mockito.any(UUID.class))).thenReturn(Optional.ofNullable(post));
         when(postRepository.save(Mockito.any(Post.class))).thenReturn(post);
-        when(projectService.projectExist(Mockito.any(UUID.class))).thenReturn(true);
 
-        PostDto post = postService.updatePostById(projectId,postId,postDto);
+        PostDto post = postService.updatePostById(postId,postDto);
 
         assertThat(post).isNotNull();
     }
 
     @Test
     public void PostService_DeletePostById_PostDeleted () {
-        UUID projectId = new UUID(10,10);
         UUID postId = new UUID(10,10);
-
-        when(projectService.projectExist(Mockito.any(UUID.class))).thenReturn(true);
-
-        assertAll(() -> postService.deletePostById(projectId,postId));
+        assertAll(() -> postService.deletePostById(postId));
     }
 }

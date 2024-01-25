@@ -1,5 +1,6 @@
 package com.meetandcraft.api.project;
 
+import com.meetandcraft.api.member.Member;
 import com.meetandcraft.api.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

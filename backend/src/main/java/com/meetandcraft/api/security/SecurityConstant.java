@@ -3,5 +3,5 @@ package com.meetandcraft.api.security;
 import lombok.Value;
 
 public class SecurityConstant {
-    public static final long JWT_EXPIRATION = 5 * 60 * 60;;
+    public static final long JWT_EXPIRATION = 30 * 24 * 60 * 60;
 }

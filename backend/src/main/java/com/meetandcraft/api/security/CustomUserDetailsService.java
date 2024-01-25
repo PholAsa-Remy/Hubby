@@ -2,7 +2,7 @@ package com.meetandcraft.api.security;
 
 import com.meetandcraft.api.user.Role;
 import com.meetandcraft.api.user.UserEntity;
-import com.meetandcraft.api.user.UserRepository;
+import com.meetandcraft.api.user.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,16 +18,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private UserRepository userRepository;
+    private UserEntityRepository userEntityRepository;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailsService(UserEntityRepository userEntityRepository) {
+        this.userEntityRepository = userEntityRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository
+        UserEntity user = userEntityRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
         return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
