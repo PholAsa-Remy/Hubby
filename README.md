@@ -2,31 +2,35 @@
 
 ## Introduction
 
-**Meet and Craft** is a team-building application dedicated to leisure projects. The main objective is to bring together individuals with diverse skills in a project they want to realize. The project aims to address the common issue where people have many project ideas, but sometimes lack the necessary skills to independently bring them to fruition.
+**Meet and Craft** is a platform to share the advancement of project (usually called DevBlog) because every project have a history to be told. The main goal is to reunite and encourage creative people who might want to start their journey in the development of their personal project. 
 
 ## Project Goals
 
 ### General Goals
 
-- Facilitate the creation and realization of projects by assembling multidisciplinary teams.
-- Encourage collaboration and skills exchange among team members.
+- Provide a easy way to keep and share a history of a project
+- Make people meet other creative and motivated people
 
 ### Specific Goals
 
-- Provide a user-friendly platform for team search and formation.
-- Allow users to post project ideas.
+- Provide a user-friendly platform to share project and the advancement.
 - Enable users to search for projects that interest them.
 
 ## Project Scope
 
 ### Features to Develop
 
-- **Profile Creation:** Users can create profiles with information about their skills, interests, and experiences.
-- **Project Posting:** Users can post project ideas with a description, required skills, and goals.
-- **Team Search:** Ability to search for interesting projects.
-- **Communication:** Online chat and forums to facilitate communication among team members.
+#### MVP :
+- **User:** Users can create profiles with information about their skills, interests, and experiences.
+- **Project Creation:** Users can create project with a description, goal, and other things that have to be defined.
+- **POST History:** Users can create post to share their advancement. 
+- **Project Search:** Ability to search for interesting projects.
 
-## Functional Requirements
-
-- **Use Cases:** Users can register, create projects, search for projects, form teams, and collaborate online.
-- **Usage Scenarios:** A user can create a profile, post a project, join a team, chat online, and contribute to the project's realization.
+#### Additionnal features to add :
+- **Team:** User can join a project and contribute to the project page and sharing
+- **Subscribe:** User can subscribe to interesting project to stay up to date
+- **Project Tags:** Project can be tagged based on their subject
+- **Post Tags:** Post can be can be tagged based on their subject
+- **Mission Posting:** Project Owner can post mission to be filled by spectator to help the project
+- **Donation:** Users can help project they like
+- ...
